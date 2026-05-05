@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minisitio de Consultas UNIACC</title>
+    <title>Minisitio de Consultas UNIACC - Portal Accesible</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -19,17 +19,52 @@
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        
+        /* Mejoras de accesibilidad */
+        .focus-visible:focus-visible {
+            outline: 3px solid #2c66ff;
+            outline-offset: 2px;
+        }
+        
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: #2c66ff;
+            color: white;
+            padding: 8px 16px;
+            z-index: 100;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        .skip-link:focus {
+            top: 0;
+        }
+        
+        /* Mejor contraste para textos */
+        .text-high-contrast {
+            color: #1f2937;
+        }
+        
+        .text-medium-contrast {
+            color: #374151;
+        }
     </style>
 </head>
 <body class="text-slate-800">
+    <!-- Skip Navigation Link -->
+    <a href="#main-content" class="skip-link focus:top-0 focus:absolute">
+        Saltar al contenido principal
+    </a>
 
     <div id="app">
         <!-- Header -->
-        <header class="relative w-full py-12 px-6 shadow-lg bg-[#2c66ff]">
+        <header class="relative w-full py-12 px-6 shadow-lg bg-[#2c66ff]" role="banner">
             <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-8 text-white">
-              <div class="w-40 h-40 bg-white/10 rounded-xl flex items-center justify-center border-2 border-white/20 backdrop-blur-sm shrink-0 p-3">
-    <img src="logo_animado.gif" alt="Logo UNIACC" class="w-full h-full object-contain">
-</div>
+                <div class="w-40 h-40 bg-white/10 rounded-xl flex items-center justify-center border-2 border-white/20 backdrop-blur-sm shrink-0 p-3" aria-label="Logo institucional UNIACC">
+                    <img src="logo_animado.gif" alt="Logo UNIACC - Universidad Internacional de las Comunicaciones" class="w-full h-full object-contain">
+                </div>
                 <div class="text-center md:text-left">
                     <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-2 uppercase">comunicándonos</h1>
                     <p class="text-xl md:text-2xl font-semibold opacity-90">¿Cómo resolver tus dudas en UNIACC?</p>
@@ -37,333 +72,488 @@
             </div>
         </header>
 
-        <main class="max-w-6xl mx-auto px-6 py-12">
+        <main id="main-content" class="max-w-6xl mx-auto px-6 py-12" role="main">
             <!-- Home View -->
             <div id="home-view" class="text-center">
                 <h2 class="text-2xl font-bold mb-8 uppercase tracking-wider text-[#2c66ff]">Escoge una categoría</h2>
                 <div class="flex flex-wrap justify-center gap-6 mb-16">
-                    <button onclick="showCategory('Academico')" class="group flex flex-col items-center justify-center w-64 h-64 rounded-3xl transition-all duration-300 transform hover:scale-105 bg-white shadow-lg border-4 border-[#eab308]">
-                        <i data-lucide="graduation-cap" class="w-16 h-16 mb-4 text-[#eab308]"></i>
-                        <span class="text-2xl font-bold uppercase text-[#3d3838]">Académico</span>
+                    <button onclick="showCategory('Academico')" 
+                            aria-label="Consultas académicas - dudas sobre actividades, contenido y calificaciones"
+                            class="group flex flex-col items-center justify-center w-64 h-64 rounded-3xl transition-all duration-300 transform hover:scale-105 bg-white shadow-lg border-4 border-[#eab308] focus-visible:ring-4 focus-visible:ring-[#eab308]">
+                        <i data-lucide="graduation-cap" class="w-16 h-16 mb-4 text-[#eab308]" aria-hidden="true"></i>
+                        <span class="text-2xl font-bold uppercase text-[#1f2937]">Académico</span>
                     </button>
-                    <button onclick="showCategory('Administrativo')" class="group flex flex-col items-center justify-center w-64 h-64 rounded-3xl transition-all duration-300 transform hover:scale-105 bg-white shadow-lg border-4 border-[#ff01ff]">
-                        <i data-lucide="building-2" class="w-16 h-16 mb-4 text-[#ff01ff]"></i>
-                        <span class="text-2xl font-bold uppercase text-[#3d3838]">Administrativo</span>
+                    <button onclick="showCategory('Administrativo')" 
+                            aria-label="Consultas administrativas - trámites, problemas técnicos y situaciones económicas"
+                            class="group flex flex-col items-center justify-center w-64 h-64 rounded-3xl transition-all duration-300 transform hover:scale-105 bg-white shadow-lg border-4 border-[#ff01ff] focus-visible:ring-4 focus-visible:ring-[#ff01ff]">
+                        <i data-lucide="building-2" class="w-16 h-16 mb-4 text-[#ff01ff]" aria-hidden="true"></i>
+                        <span class="text-2xl font-bold uppercase text-[#1f2937]">Administrativo</span>
                     </button>
                 </div>
                 
-<!-- Infografía de derivación UNIACC -->
-<div class="max-w-6xl mx-auto mb-16 px-2">
-    <div class="bg-gradient-to-br from-white to-slate-50 rounded-3xl shadow-lg border border-slate-200 overflow-hidden">
-        <!-- Título -->
-        <div class="bg-[#2c66ff] px-6 py-4">
-            <div class="flex items-center gap-3 text-white">
-                <i data-lucide="git-branch" class="w-6 h-6"></i>
-                <h3 class="text-xl font-extrabold uppercase tracking-wide">Circuito de Derivación</h3>
-                <span class="text-xs bg-white/20 px-3 py-1 rounded-full ml-auto">¿A quién recurrir?</span>
-            </div>
-        </div>
+                <!-- Infografía de derivación UNIACC -->
+                <div class="max-w-6xl mx-auto mb-16 px-2">
+                    <div class="bg-gradient-to-br from-white to-slate-50 rounded-3xl shadow-lg border border-slate-200 overflow-hidden">
+                        <div class="bg-[#2c66ff] px-6 py-4">
+                            <div class="flex items-center gap-3 text-white">
+                                <i data-lucide="git-branch" class="w-6 h-6" aria-hidden="true"></i>
+                                <h3 class="text-xl font-extrabold uppercase tracking-wide">Circuito de Derivación</h3>
+                                <span class="text-xs bg-white/20 px-3 py-1 rounded-full ml-auto">¿A quién recurrir?</span>
+                            </div>
+                        </div>
 
-        <div class="p-6 md:p-8">
-            <!-- Estructura en dos niveles: Estudiante raíz -->
-            <div class="flex justify-center mb-8">
-                <div class="bg-gradient-to-br from-[#1e293b] to-[#0f172a] text-white rounded-2xl px-8 py-4 shadow-lg inline-flex items-center gap-3">
-                    <i data-lucide="users" class="w-8 h-8 text-[#eab308]"></i>
-                    <span class="text-2xl font-black uppercase tracking-wide">Estudiante</span>
+                        <div class="p-6 md:p-8">
+                            <div class="flex justify-center mb-8">
+                                <div class="bg-gradient-to-br from-[#1e293b] to-[#0f172a] text-white rounded-2xl px-8 py-4 shadow-lg inline-flex items-center gap-3">
+                                    <i data-lucide="users" class="w-8 h-8 text-[#eab308]" aria-hidden="true"></i>
+                                    <span class="text-2xl font-black uppercase tracking-wide">Estudiante</span>
+                                </div>
+                            </div>
+
+                            <div class="flex justify-center relative -mt-2 mb-8">
+                                <div class="w-0.5 h-10 bg-slate-300" aria-hidden="true"></div>
+                                <div class="absolute top-8 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-[#eab308]" aria-hidden="true"></div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 relative">
+                                <div class="flex flex-col items-center text-center">
+                                    <div class="w-full bg-amber-50 border-l-8 border-[#eab308] rounded-xl p-4 shadow-sm mb-4">
+                                        <i data-lucide="help-circle" class="w-8 h-8 text-[#eab308] mx-auto mb-2" aria-hidden="true"></i>
+                                        <h4 class="font-black text-[#1f2937]">Dudas sobre actividades y contenido</h4>
+                                    </div>
+                                    <div class="relative w-px h-6 bg-slate-300 my-1" aria-hidden="true"></div>
+                                    <div class="bg-white rounded-xl border shadow-sm p-3 w-full flex items-center gap-3 hover:shadow-md transition">
+                                        <div class="w-8 h-8 rounded-full bg-[#2c66ff] flex items-center justify-center" aria-hidden="true">
+                                            <i data-lucide="graduation-cap" class="w-4 h-4 text-white" aria-hidden="true"></i>
+                                        </div>
+                                        <div class="text-left">
+                                            <span class="font-bold text-[#2c66ff]">Docencia</span>
+                                            <p class="text-xs text-slate-600">Foros / Correo</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-1 mt-3 text-xs text-slate-600 bg-slate-100 rounded-full px-3 py-1">
+                                        <i data-lucide="corner-down-right" class="w-3 h-3" aria-hidden="true"></i>
+                                        <span>Si es calificación o extensión →</span>
+                                        <span class="font-semibold text-[#2c66ff]">Secretaría Académica</span>
+                                    </div>
+                                </div>
+
+                                <div class="flex flex-col items-center text-center relative">
+                                    <div class="w-full bg-fuchsia-50 border-l-8 border-[#ff01ff] rounded-xl p-4 shadow-sm mb-4">
+                                        <i data-lucide="file-text" class="w-8 h-8 text-[#ff01ff] mx-auto mb-2" aria-hidden="true"></i>
+                                        <h4 class="font-black text-[#1f2937]">Trámites administrativos</h4>
+                                    </div>
+                                    <div class="relative w-px h-6 bg-slate-300 my-1" aria-hidden="true"></div>
+                                    <div class="bg-white rounded-xl border shadow-sm p-3 w-full flex items-center gap-3 hover:shadow-md">
+                                        <div class="w-8 h-8 rounded-full bg-[#ff01ff] flex items-center justify-center" aria-hidden="true">
+                                            <i data-lucide="help-circle" class="w-4 h-4 text-white" aria-hidden="true"></i>
+                                        </div>
+                                        <div class="text-left">
+                                            <span class="font-bold text-[#ff01ff]">Plataforma de soporte</span>
+                                            <p class="text-xs text-slate-600">solicitudes.uniacc.cl</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="flex flex-col items-center text-center">
+                                    <div class="w-full bg-blue-50 border-l-8 border-[#2c66ff] rounded-xl p-4 shadow-sm mb-4">
+                                        <i data-lucide="calendar-check" class="w-8 h-8 text-[#2c66ff] mx-auto mb-2" aria-hidden="true"></i>
+                                        <h4 class="font-black text-[#1f2937]">Gestión académica</h4>
+                                    </div>
+                                    <div class="relative w-px h-6 bg-slate-300 my-1" aria-hidden="true"></div>
+                                    <div class="bg-white rounded-xl border shadow-sm p-3 w-full flex items-center gap-3 hover:shadow-md">
+                                        <div class="w-8 h-8 rounded-full bg-[#2c66ff] flex items-center justify-center" aria-hidden="true">
+                                            <i data-lucide="building-2" class="w-4 h-4 text-white" aria-hidden="true"></i>
+                                        </div>
+                                        <div class="text-left">
+                                            <span class="font-bold text-[#2c66ff]">Secretaría Académica</span>
+                                            <p class="text-xs text-slate-600">Inscripción / Horarios</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mt-10 pt-6 border-t-2 border-dashed border-slate-200">
+                                <div class="bg-gradient-to-r from-slate-100 to-white rounded-2xl p-5 flex flex-wrap items-center justify-center gap-4">
+                                    <div class="flex items-center gap-2">
+                                        <i data-lucide="alert-circle" class="w-5 h-5 text-amber-600" aria-hidden="true"></i>
+                                        <span class="font-medium text-[#1f2937]">¿Problemas de plataforma o acceso?</span>
+                                    </div>
+                                    <div class="bg-[#ffa500] text-white px-5 py-2 rounded-full font-bold flex items-center gap-2 shadow-sm">
+                                        <i data-lucide="headphones" class="w-4 h-4" aria-hidden="true"></i>
+                                        SAE
+                                    </div>
+                                    <i data-lucide="arrow-right" class="w-5 h-5 text-slate-400" aria-hidden="true"></i>
+                                    <div class="bg-[#2c66ff] text-white px-5 py-2 rounded-full font-bold flex items-center gap-2 shadow-sm">
+                                        <i data-lucide="help-circle" class="w-4 h-4" aria-hidden="true"></i>
+                                        Plataforma de soporte
+                                    </div>
+                                </div>
+                                <p class="text-center text-xs text-slate-600 mt-3">* SAE deriva a plataforma de soporte para solicitudes técnicas, credenciales o bienestar</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-
-            <!-- Línea conectora central -->
-            <div class="flex justify-center relative -mt-2 mb-8">
-                <div class="w-0.5 h-10 bg-slate-300"></div>
-                <div class="absolute top-8 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-[#eab308]"></div>
-            </div>
-
-            <!-- TRES COLUMNAS PRINCIPALES -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 relative">
-                
-                <!-- Columna 1: Dudas actividades y contenido -->
-                <div class="flex flex-col items-center text-center">
-                    <div class="w-full bg-amber-50 border-l-8 border-[#eab308] rounded-xl p-4 shadow-sm mb-4">
-                        <i data-lucide="help-circle" class="w-8 h-8 text-[#eab308] mx-auto mb-2"></i>
-                        <h4 class="font-black text-slate-800">Dudas sobre actividades y contenido</h4>
-                    </div>
-                    <div class="relative w-px h-6 bg-slate-300 my-1"></div>
-                    <div class="bg-white rounded-xl border shadow-sm p-3 w-full flex items-center gap-3 hover:shadow-md transition">
-                        <div class="w-8 h-8 rounded-full bg-[#2c66ff] flex items-center justify-center"><i data-lucide="graduation-cap" class="w-4 h-4 text-white"></i></div>
-                        <div class="text-left"><span class="font-bold text-[#2c66ff]">Docencia</span><p class="text-xs text-slate-500">Foros / Correo</p></div>
-                    </div>
-                    <div class="flex items-center gap-1 mt-3 text-xs text-slate-500 bg-slate-100 rounded-full px-3 py-1">
-                        <i data-lucide="corner-down-right" class="w-3 h-3"></i> <span>Si es calificación o extensión →</span>
-                        <span class="font-semibold text-[#2c66ff]">Secretaría Académica</span>
-                    </div>
-                </div>
-
-                <!-- Columna 2: Trámites administrativos -->
-                <div class="flex flex-col items-center text-center relative">
-                    <div class="w-full bg-fuchsia-50 border-l-8 border-[#ff01ff] rounded-xl p-4 shadow-sm mb-4">
-                        <i data-lucide="file-text" class="w-8 h-8 text-[#ff01ff] mx-auto mb-2"></i>
-                        <h4 class="font-black text-slate-800">Trámites administrativos</h4>
-                    </div>
-                    <div class="relative w-px h-6 bg-slate-300 my-1"></div>
-                    <div class="bg-white rounded-xl border shadow-sm p-3 w-full flex items-center gap-3 hover:shadow-md">
-                        <div class="w-8 h-8 rounded-full bg-[#ff01ff] flex items-center justify-center"><i data-lucide="help-circle" class="w-4 h-4 text-white"></i></div>
-                        <div class="text-left"><span class="font-bold text-[#ff01ff]">Plataforma de soporte</span><p class="text-xs text-slate-500">solicitudes.uniacc.cl</p></div>
-                    </div>
-                </div>
-
-                <!-- Columna 3: Gestión académica -->
-                <div class="flex flex-col items-center text-center">
-                    <div class="w-full bg-blue-50 border-l-8 border-[#2c66ff] rounded-xl p-4 shadow-sm mb-4">
-                        <i data-lucide="calendar-check" class="w-8 h-8 text-[#2c66ff] mx-auto mb-2"></i>
-                        <h4 class="font-black text-slate-800">Gestión académica</h4>
-                    </div>
-                    <div class="relative w-px h-6 bg-slate-300 my-1"></div>
-                    <div class="bg-white rounded-xl border shadow-sm p-3 w-full flex items-center gap-3 hover:shadow-md">
-                        <div class="w-8 h-8 rounded-full bg-[#2c66ff] flex items-center justify-center"><i data-lucide="building-2" class="w-4 h-4 text-white"></i></div>
-                        <div class="text-left"><span class="font-bold text-[#2c66ff]">Secretaría Académica</span><p class="text-xs text-slate-500">Inscripción / Horarios</p></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Fila final horizontal: Problemas técnicos / SAE / Soporte -->
-            <div class="mt-10 pt-6 border-t-2 border-dashed border-slate-200">
-                <div class="bg-gradient-to-r from-slate-100 to-white rounded-2xl p-5 flex flex-wrap items-center justify-center gap-4">
-                    <div class="flex items-center gap-2"><i data-lucide="alert-circle" class="w-5 h-5 text-amber-600"></i><span class="font-medium">¿Problemas de plataforma o acceso?</span></div>
-                    <div class="bg-[#ffa500] text-white px-5 py-2 rounded-full font-bold flex items-center gap-2 shadow-sm"><i data-lucide="headphones" class="w-4 h-4"></i> SAE</div>
-                    <i data-lucide="arrow-right" class="w-5 h-5 text-slate-400"></i>
-                    <div class="bg-[#2c66ff] text-white px-5 py-2 rounded-full font-bold flex items-center gap-2 shadow-sm"><i data-lucide="help-circle" class="w-4 h-4"></i> Plataforma de soporte</div>
-                </div>
-                <p class="text-center text-xs text-slate-400 mt-3">* SAE deriva a plataforma de soporte para solicitudes técnicas, credenciales o bienestar</p>
-            </div>
-        </div>
-    </div>
-</div>
 
                 <div class="bg-white rounded-3xl p-8 shadow-sm border border-slate-200 max-w-4xl mx-auto">
-                    <h3 class="text-lg font-bold mb-6 text-slate-500 uppercase tracking-widest text-center">Enlaces de Interés</h3>
+                    <h3 class="text-lg font-bold mb-6 text-slate-600 uppercase tracking-widest text-center">Enlaces de Interés</h3>
                     
                     <div class="flex flex-wrap justify-center gap-4 mb-8">
-                        <a href="https://ayudaestudiantes.uniacc.cl/" target="_blank" class="flex items-center gap-2 px-6 py-4 rounded-2xl font-bold border-2 border-[#2c66ff] text-[#2c66ff] transition-all hover:bg-slate-50">
-                            <i data-lucide="life-buoy" class="w-6 h-6"></i> PORTAL DE AYUDA
+                        <a href="https://ayudaestudiantes.uniacc.cl/" target="_blank" 
+                           aria-label="Portal de ayuda para estudiantes (abre en nueva ventana)"
+                           class="flex items-center gap-2 px-6 py-4 rounded-2xl font-bold border-2 border-[#2c66ff] text-[#2c66ff] transition-all hover:bg-slate-50 focus-visible:ring-4 focus-visible:ring-[#2c66ff]">
+                            <i data-lucide="life-buoy" class="w-6 h-6" aria-hidden="true"></i>
+                            PORTAL DE AYUDA
                         </a>
-                        <a href="https://solicitudes.uniacc.cl/" target="_blank" class="flex items-center gap-2 px-6 py-4 rounded-2xl font-bold border-2 border-[#2c66ff] text-[#2c66ff] transition-all hover:bg-slate-50">
-                            <i data-lucide="headphones" class="w-6 h-6"></i> SOPORTE
+                        <a href="https://solicitudes.uniacc.cl/" target="_blank"
+                           aria-label="Plataforma de soporte técnico (abre en nueva ventana)"
+                           class="flex items-center gap-2 px-6 py-4 rounded-2xl font-bold border-2 border-[#2c66ff] text-[#2c66ff] transition-all hover:bg-slate-50 focus-visible:ring-4 focus-visible:ring-[#2c66ff]">
+                            <i data-lucide="headphones" class="w-6 h-6" aria-hidden="true"></i>
+                            SOPORTE
                         </a>
                     </div>
 
                     <div class="max-w-2xl mx-auto border-t border-slate-100 pt-8 text-center space-y-6">
-                        <p class="text-sm text-slate-600 leading-relaxed">
+                        <p class="text-sm text-slate-700 leading-relaxed">
                             Recuerda que para acceder a los portales de ayuda debes contar con tus <strong>credenciales institucionales</strong>. 
                             Si necesitas ayuda con esto contacta con el <strong>Servicio de Atención Estudiantil (SAE)</strong>, revisa sus horarios de atención.
                         </p>
-                        <button onclick="toggleModal(true)" class="px-8 py-3 rounded-xl text-white font-bold transition-all hover:shadow-lg transform active:scale-95 bg-[#ffa500]">
-                            <i data-lucide="calendar" class="w-5 h-5 inline-block mr-2"></i>
+                        <button onclick="toggleModal(true)" 
+                                aria-expanded="false"
+                                aria-haspopup="dialog"
+                                class="px-8 py-3 rounded-xl text-white font-bold transition-all hover:shadow-lg transform active:scale-95 bg-[#ffa500] focus-visible:ring-4 focus-visible:ring-[#ffa500] focus-visible:ring-offset-2">
+                            <i data-lucide="calendar" class="w-5 h-5 inline-block mr-2" aria-hidden="true"></i>
                             VER HORARIOS SAE
                         </button>
-			<button onclick="toggleModalSecretaria(true)" class="px-8 py-3 rounded-xl text-white font-bold transition-all hover:shadow-lg transform active:scale-95 bg-[#2c66ff]">
-        		    <i data-lucide="clock" class="w-5 h-5 inline-block mr-2"></i>
-        		    VER HORARIOS SECRETARÍA ACADÉMICA
-   			 </button>
+                        <button onclick="toggleModalSecretaria(true)"
+                                aria-expanded="false"
+                                aria-haspopup="dialog"
+                                class="px-8 py-3 rounded-xl text-white font-bold transition-all hover:shadow-lg transform active:scale-95 bg-[#2c66ff] focus-visible:ring-4 focus-visible:ring-[#2c66ff] focus-visible:ring-offset-2">
+                            <i data-lucide="clock" class="w-5 h-5 inline-block mr-2" aria-hidden="true"></i>
+                            VER HORARIOS SECRETARÍA ACADÉMICA
+                        </button>
                     </div>
                 </div>
             </div>
 
             <!-- Category View (Hidden by default) -->
             <div id="category-view" class="hidden animate-fade-in">
-                <button onclick="showHome()" class="flex items-center gap-2 font-bold mb-8 text-[#2c66ff] hover:opacity-75">
-                    <i data-lucide="chevron-left" class="w-5 h-5"></i> VOLVER AL MENÚ
+                <button onclick="showHome()" 
+                        aria-label="Volver al menú principal"
+                        class="flex items-center gap-2 font-bold mb-8 text-[#2c66ff] hover:opacity-75 focus-visible:ring-4 focus-visible:ring-[#2c66ff]">
+                    <i data-lucide="chevron-left" class="w-5 h-5" aria-hidden="true"></i>
+                    VOLVER AL MENÚ
                 </button>
                 <div class="mb-10 flex items-center gap-4">
-                    <div id="category-bar" class="w-2 h-10 rounded-full"></div>
+                    <div id="category-bar" class="w-2 h-10 rounded-full" aria-hidden="true"></div>
                     <h2 id="category-title" class="text-3xl font-extrabold uppercase"></h2>
                 </div>
-                <div id="cases-container" class="grid gap-8"></div>
+                <div id="cases-container" class="grid gap-8" role="list"></div>
             </div>
         </main>
 
-        <footer class="py-8 text-center text-slate-400 text-xs px-4">
+        <footer class="py-8 text-center text-slate-500 text-xs px-4" role="contentinfo">
             <p>© <span id="year"></span> Universidad UNIACC - Dirección de Ambientes Virtuales de Aprendizaje</p>
         </footer>
     </div>
 
- <!-- Modal SAE -->
-<div id="sae-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-    <div class="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
-        <div class="p-6 border-b border-slate-100 flex justify-between items-center sticky top-0 bg-white z-10">
-            <h3 class="text-xl font-extrabold uppercase flex items-center gap-2 text-[#ffa500]">
-                <i data-lucide="calendar" class="w-6 h-6"></i> Horarios de Atención SAE
-            </h3>
-            <button onclick="toggleModal(false)" class="p-2 hover:bg-slate-100 rounded-full transition-colors"><i data-lucide="x" class="w-6 h-6"></i></button>
-        </div>
-        <div class="p-8 space-y-8 text-sm">
-            <!-- Atención Virtual -->
-            <section class="rounded-2xl p-6 border border-[#ffddaa] bg-[#ffeedd]">
-                <div class="flex items-center gap-3 mb-4 text-[#ffa500]">
-                    <i data-lucide="monitor" class="w-6 h-6"></i>
-                    <h4 class="text-lg font-bold">Atención Virtual</h4>
-                    <span class="text-xs bg-[#ffa500]/20 text-[#cc7700] px-2 py-0.5 rounded-full">Consejeros Estudiantiles</span>
-                </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div class="flex justify-between p-2 bg-white rounded-lg shadow-sm"><b>Lunes:</b> 8:30 - 18:00</div>
-                    <div class="flex justify-between p-2 bg-white rounded-lg shadow-sm"><b>Martes:</b> 8:30 - 20:30</div>
-                    <div class="flex justify-between p-2 bg-white rounded-lg shadow-sm"><b>Miércoles:</b> 8:30 - 18:00</div>
-                    <div class="flex justify-between p-2 bg-white rounded-lg shadow-sm"><b>Jueves:</b> 8:30 - 20:30</div>
-                    <div class="flex justify-between p-2 bg-white rounded-lg shadow-sm"><b>Viernes:</b> 8:30 - 15:30</div>
-                    <div class="flex justify-between p-2 bg-white rounded-lg shadow-sm"><b>Sábado:</b> 10:00 - 13:30</div>
-                </div>
-            </section>
+    <!-- Modal SAE Accesible -->
+    <div id="sae-modal" 
+         class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+         role="dialog"
+         aria-modal="true"
+         aria-labelledby="sae-modal-title"
+         aria-describedby="sae-modal-desc">
+        <div class="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
+            <div class="p-6 border-b border-slate-100 flex justify-between items-center sticky top-0 bg-white z-10">
+                <h3 id="sae-modal-title" class="text-xl font-extrabold uppercase flex items-center gap-2 text-[#ffa500]">
+                    <i data-lucide="calendar" class="w-6 h-6" aria-hidden="true"></i>
+                    Horarios de Atención SAE
+                </h3>
+                <button onclick="toggleModal(false)" 
+                        aria-label="Cerrar modal de horarios SAE"
+                        class="p-2 hover:bg-slate-100 rounded-full transition-colors focus-visible:ring-2 focus-visible:ring-[#ffa500]">
+                    <i data-lucide="x" class="w-6 h-6" aria-hidden="true"></i>
+                </button>
+            </div>
+            <div id="sae-modal-desc" class="p-8 space-y-8 text-sm">
+                <section class="rounded-2xl p-6 border border-[#ffddaa] bg-[#ffeedd]">
+                    <div class="flex items-center gap-3 mb-4 text-[#ffa500]">
+                        <i data-lucide="monitor" class="w-6 h-6" aria-hidden="true"></i>
+                        <h4 class="text-lg font-bold">Atención Virtual</h4>
+                        <span class="text-xs bg-[#ffa500]/20 text-[#cc7700] px-2 py-0.5 rounded-full">Consejeros Estudiantiles</span>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div class="flex justify-between p-2 bg-white rounded-lg shadow-sm"><b>Lunes:</b> 8:30 - 18:00</div>
+                        <div class="flex justify-between p-2 bg-white rounded-lg shadow-sm"><b>Martes:</b> 8:30 - 20:30</div>
+                        <div class="flex justify-between p-2 bg-white rounded-lg shadow-sm"><b>Miércoles:</b> 8:30 - 18:00</div>
+                        <div class="flex justify-between p-2 bg-white rounded-lg shadow-sm"><b>Jueves:</b> 8:30 - 20:30</div>
+                        <div class="flex justify-between p-2 bg-white rounded-lg shadow-sm"><b>Viernes:</b> 8:30 - 15:30</div>
+                        <div class="flex justify-between p-2 bg-white rounded-lg shadow-sm"><b>Sábado:</b> 10:00 - 13:30</div>
+                    </div>
+                </section>
 
-            <!-- Atención Presencial -->
-            <section class="rounded-2xl p-6 border border-[#ffddaa] bg-[#ffeedd]">
-                <div class="flex items-center gap-3 mb-4 text-[#ffa500]">
-                    <i data-lucide="building" class="w-6 h-6"></i>
-                    <h4 class="text-lg font-bold">Atención Presencial</h4>
-                    <span class="text-xs bg-[#ffa500]/20 text-[#cc7700] px-2 py-0.5 rounded-full">Ejecutivos de Atención</span>
-                </div>
-                <div class="mb-3 text-xs text-slate-500 flex items-center gap-1">
-                    <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
-                    Av. Salvador 1200, Providencia, Región Metropolitana
-                </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div class="flex justify-between p-2 bg-white rounded-lg shadow-sm"><b>Lunes a jueves:</b> 8:30 - 18:30</div>
-                    <div class="flex justify-between p-2 bg-white rounded-lg shadow-sm"><b>Viernes:</b> 8:30 - 15:30</div>
-                    <div class="flex justify-between p-2 bg-white rounded-lg shadow-sm"><b>Sábado:</b> 10:00 - 14:00</div>
-                </div>
-            </section>
+                <section class="rounded-2xl p-6 border border-[#ffddaa] bg-[#ffeedd]">
+                    <div class="flex items-center gap-3 mb-4 text-[#ffa500]">
+                        <i data-lucide="building" class="w-6 h-6" aria-hidden="true"></i>
+                        <h4 class="text-lg font-bold">Atención Presencial</h4>
+                        <span class="text-xs bg-[#ffa500]/20 text-[#cc7700] px-2 py-0.5 rounded-full">Ejecutivos de Atención</span>
+                    </div>
+                    <div class="mb-3 text-xs text-slate-600 flex items-center gap-1">
+                        <i data-lucide="map-pin" class="w-3.5 h-3.5" aria-hidden="true"></i>
+                        Av. Salvador 1200, Providencia, Región Metropolitana
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div class="flex justify-between p-2 bg-white rounded-lg shadow-sm"><b>Lunes a jueves:</b> 8:30 - 18:30</div>
+                        <div class="flex justify-between p-2 bg-white rounded-lg shadow-sm"><b>Viernes:</b> 8:30 - 15:30</div>
+                        <div class="flex justify-between p-2 bg-white rounded-lg shadow-sm"><b>Sábado:</b> 10:00 - 14:00</div>
+                    </div>
+                </section>
 
-            <!-- Información de huso horario -->
-            <div class="rounded-2xl p-4 border border-[#ffddaa] bg-[#fff8f0] flex items-start gap-3">
-                <i data-lucide="clock" class="w-5 h-5 text-[#ffa500] shrink-0 mt-0.5"></i>
-                <p class="text-xs text-slate-600 leading-relaxed">
-                    <strong class="text-[#ffa500]">Importante:</strong> Para todos los horarios de atención considerar <strong>2 horas menos para Isla de Pascua</strong> y <strong>1 hora menos para Magallanes en verano</strong>.
-                </p>
+                <div class="rounded-2xl p-4 border border-[#ffddaa] bg-[#fff8f0] flex items-start gap-3">
+                    <i data-lucide="clock" class="w-5 h-5 text-[#ffa500] shrink-0 mt-0.5" aria-hidden="true"></i>
+                    <p class="text-xs text-slate-700 leading-relaxed">
+                        <strong class="text-[#ffa500]">Importante:</strong> Para todos los horarios de atención considerar <strong>2 horas menos para Isla de Pascua</strong> y <strong>1 hora menos para Magallanes en verano</strong>.
+                    </p>
+                </div>
+            </div>
+            <div class="p-6 bg-slate-50 text-center">
+                <button onclick="toggleModal(false)" 
+                        class="px-8 py-2 rounded-xl text-white font-bold bg-[#ffa500] focus-visible:ring-4 focus-visible:ring-[#ffa500] focus-visible:ring-offset-2">
+                    Entendido
+                </button>
             </div>
         </div>
-        <div class="p-6 bg-slate-50 text-center">
-            <button onclick="toggleModal(false)" class="px-8 py-2 rounded-xl text-white font-bold bg-[#ffa500]">Entendido</button>
-        </div>
     </div>
-</div>
 
-<!-- Modal Secretaría Académica -->
-<div id="secretaria-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-    <div class="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
-        <div class="p-6 border-b border-slate-100 flex justify-between items-center sticky top-0 bg-white z-10">
-            <h3 class="text-xl font-extrabold uppercase flex items-center gap-2 text-[#2c66ff]">
-                <i data-lucide="clock" class="w-6 h-6"></i> Horarios Secretaría Académica
-            </h3>
-            <button onclick="toggleModalSecretaria(false)" class="p-2 hover:bg-slate-100 rounded-full transition-colors"><i data-lucide="x" class="w-6 h-6"></i></button>
-        </div>
-        <div class="p-8 space-y-8 text-sm">
-            <section class="rounded-2xl p-6 border border-[#cce0ff] bg-[#eef4ff]">
-                <div class="flex items-center gap-3 mb-4 text-[#2c66ff]">
-                    <i data-lucide="building-2" class="w-6 h-6"></i>
-                    <h4 class="text-lg font-bold">Horarios de Atención</h4>
-                </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div class="flex justify-between p-2 bg-white rounded-lg shadow-sm"><b>Lunes:</b> 8:30 - 18:00</div>
-                    <div class="flex justify-between p-2 bg-white rounded-lg shadow-sm"><b>Martes:</b> 8:30 - 18:00</div>
-                    <div class="flex justify-between p-2 bg-white rounded-lg shadow-sm"><b>Miércoles:</b> 8:30 - 18:00</div>
-                    <div class="flex justify-between p-2 bg-white rounded-lg shadow-sm"><b>Jueves:</b> 8:30 - 18:00</div>
-                    <div class="flex justify-between p-2 bg-white rounded-lg shadow-sm"><b>Viernes:</b> 8:30 - 15:30</div>
-                </div>
-                <div class="mt-4 p-3 bg-white rounded-lg text-xs text-slate-700 flex items-start gap-2">
-                    <i data-lucide="clock" class="w-4 h-4 text-[#2c66ff] shrink-0 mt-0.5"></i>
-                    <span><strong class="text-[#2c66ff]">Importante:</strong> Para todos los horarios de atención considerar <strong>2 horas menos para Isla de Pascua</strong> y <strong>1 hora menos para Magallanes en verano</strong>.</span>
-                </div>
-            </section>
-        </div>
-        <div class="p-6 bg-slate-50 text-center">
-            <button onclick="toggleModalSecretaria(false)" class="px-8 py-2 rounded-xl text-white font-bold bg-[#2c66ff]">Entendido</button>
+    <!-- Modal Secretaría Académica Accesible -->
+    <div id="secretaria-modal" 
+         class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+         role="dialog"
+         aria-modal="true"
+         aria-labelledby="secretaria-modal-title"
+         aria-describedby="secretaria-modal-desc">
+        <div class="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
+            <div class="p-6 border-b border-slate-100 flex justify-between items-center sticky top-0 bg-white z-10">
+                <h3 id="secretaria-modal-title" class="text-xl font-extrabold uppercase flex items-center gap-2 text-[#2c66ff]">
+                    <i data-lucide="clock" class="w-6 h-6" aria-hidden="true"></i>
+                    Horarios Secretaría Académica
+                </h3>
+                <button onclick="toggleModalSecretaria(false)" 
+                        aria-label="Cerrar modal de horarios de Secretaría Académica"
+                        class="p-2 hover:bg-slate-100 rounded-full transition-colors focus-visible:ring-2 focus-visible:ring-[#2c66ff]">
+                    <i data-lucide="x" class="w-6 h-6" aria-hidden="true"></i>
+                </button>
+            </div>
+            <div id="secretaria-modal-desc" class="p-8 space-y-8 text-sm">
+                <section class="rounded-2xl p-6 border border-[#cce0ff] bg-[#eef4ff]">
+                    <div class="flex items-center gap-3 mb-4 text-[#2c66ff]">
+                        <i data-lucide="building-2" class="w-6 h-6" aria-hidden="true"></i>
+                        <h4 class="text-lg font-bold">Horarios de Atención</h4>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div class="flex justify-between p-2 bg-white rounded-lg shadow-sm"><b>Lunes:</b> 8:30 - 18:00</div>
+                        <div class="flex justify-between p-2 bg-white rounded-lg shadow-sm"><b>Martes:</b> 8:30 - 18:00</div>
+                        <div class="flex justify-between p-2 bg-white rounded-lg shadow-sm"><b>Miércoles:</b> 8:30 - 18:00</div>
+                        <div class="flex justify-between p-2 bg-white rounded-lg shadow-sm"><b>Jueves:</b> 8:30 - 18:00</div>
+                        <div class="flex justify-between p-2 bg-white rounded-lg shadow-sm"><b>Viernes:</b> 8:30 - 15:30</div>
+                    </div>
+                    <div class="mt-4 p-3 bg-white rounded-lg text-xs text-slate-700 flex items-start gap-2">
+                        <i data-lucide="clock" class="w-4 h-4 text-[#2c66ff] shrink-0 mt-0.5" aria-hidden="true"></i>
+                        <span><strong class="text-[#2c66ff]">Importante:</strong> Para todos los horarios de atención considerar <strong>2 horas menos para Isla de Pascua</strong> y <strong>1 hora menos para Magallanes en verano</strong>.</span>
+                    </div>
+                </section>
+            </div>
+            <div class="p-6 bg-slate-50 text-center">
+                <button onclick="toggleModalSecretaria(false)" 
+                        class="px-8 py-2 rounded-xl text-white font-bold bg-[#2c66ff] focus-visible:ring-4 focus-visible:ring-[#2c66ff] focus-visible:ring-offset-2">
+                    Entendido
+                </button>
+            </div>
         </div>
     </div>
-</div>
 
     <script>
         const data = {
             Academico: [
-                { id: 1, situacion: "Duda sobre instrucciones de actividad y/o evaluación", descripcionSituacion: "No se comprende qué se solicita en una actividad.", queHacer: "Revisar nuevamente las instrucciones y los recursos asociados, y aclarar la dudas en el foro.", canal: "Foro de dudas de la unidad: <strong>¿Tienes dudas? Pregúntale a tu docente</strong>.", espera: "24 horas", resultado: "Clarificación de la consigna y comprensión de lo esperado antes de ejecutar la actividad." },
-                { id: 2, situacion: "Duda conceptual", descripcionSituacion: " No se comprende un contenido o concepto de la unidad.", queHacer: "Plantear la duda específica vinculada al contenido.", canal: "Foro académico, lo encontarás como <strong>Avisos importantes y consultas a tu docente</strong> / Foro unidad, búscalo como <strong>¿Tienes dudas? Pregúntale a tu docente </strong>.", espera: "24 horas", resultado: "Comprensión del contenido a partir de la interacción con la docencia o pares." },
+                { id: 1, situacion: "Duda sobre instrucciones de actividad y/o evaluación", descripcionSituacion: "No se comprende qué se solicita en una actividad.", queHacer: "Revisar nuevamente las instrucciones y los recursos asociados.", canal: "Foro de dudas de la unidad: <strong>¿Tienes dudas? Pregúntale a tu docente</strong>.", espera: "24 horas", resultado: "Clarificación de la consigna y comprensión de lo esperado antes de ejecutar la actividad." },
+                { id: 2, situacion: "Duda conceptual", descripcionSituacion: " No se comprende un contenido o concepto de la unidad.", queHacer: "Plantear la duda específica vinculada al contenido.", canal: "Foro académico, lo encontrarás como <strong>Avisos importantes y consultas a tu docente</strong> / Foro unidad, búscalo como <strong>¿Tienes dudas? Pregúntale a tu docente </strong>.", espera: "24 horas", resultado: "Comprensión del contenido a partir de la interacción con la docencia o pares." },
                 { id: 3, situacion: "Problema personal / extensión", descripcionSituacion:"No es posible cumplir con un plazo de entrega por motivos personales.", queHacer: "Comunicar situación oportunamente, explicando el contexto.", canal: "Correo docencia / Secretaría Académica", espera: "Sujeto a evaluación", resultado: " Evaluación del caso y posible ajuste dentro de las políticas de la institución." },
                 { id: 4, situacion: "Consulta sobre calificaciones", descripcionSituacion:"Tienes dudas sobre tus calificaciones.", queHacer: "Consulta con la docencia o secretaría académica.", canal: "Correo institucional de la docencia y/o secretaría académica", espera: "Docencia: 24h / Secretaría Académica: respuesta en horario hábil", resultado: "Entrega de información sobre las calificaciones." },
                 { id: 5, situacion: "Sugerencia de método de estudio", descripcionSituacion:"Ingresas a la asignatura y no sabes por dónde empezar.", queHacer: "Sigue la ruta: <strong>Motívate y explora</strong>, <strong>Construye y consolida</strong> y <strong>Evalúa y comprueba</strong>.", canal: "Correo institucional de la docencia y/o secretaría académica", espera: "Docencia: 24h / Secretaría Académica: respuesta en horario hábil", resultado: "Sabrás cómo comenzar tu ruta de aprendizaje." }
             ],
             Administrativo: [
                 { id: 1, situacion: "No recibe respuesta", descripcionSituacion:"Se realizó una consulta y no se ha recibido respuesta.", queHacer: "Verificar el tiempo de respuesta definido en el curso antes de insistir.", canal: "Correo institucional de la docencia y/o secretaría académica", espera: "24-48 horas", resultado: "Respeto de los tiempos establecidos y correcta gestión de la comunicación." },
-               { id: 2, situacion: "Problemas técnicos dentro del aula virtual", descripcionSituacion: "En el aula virtual hay un archivo que no se logra visualizar o tienes problemas técnicos.", queHacer: 'Revisa <a href="https://www.youtube.com/watch?v=GoIEprFKcFI" target="_blank" class="text-[#2c66ff] underline hover:opacity-75">este tutorial</a> o dirígete a <a href="https://solicitudes.uniacc.cl/" target="_blank" class="text-[#2c66ff] underline hover:opacity-75">https://solicitudes.uniacc.cl/</a> con las mismas credenciales con las que accedes al e-campus e ingresa tu consulta.', canal: "Portal de solicitudes", espera: "1 a 10 días hábiles", resultado: "Evaluación de solicitud y se deriva al área correspondiente." },
-                { id: 3, situacion: "Inscripción de asignaturas", descripcionSituacion: "Presentas dificultades con la plataforma al momento de inscribir asignaturas.", queHacer: 'Escríbele a secretaría académica o dirígete a <a href="https://solicitudes.uniacc.cl/" target="_blank" class="text-[#2c66ff] underline hover:opacity-75">https://solicitudes.uniacc.cl/</a> e ingresa tu consulta.', canal: "Portal de solicitudes o correo de secretaría académica", espera: "Si ingresas al portal obtendrás respuesta entre 1 a 10 días hábiles y desde secretaría académica en horarios hábiles", resultado: "Resolución de dificultades en la inscripción de asignaturas." },
-                { id: 4, situacion: "Situaciones económicas", descripcionSituacion: "Pagos de matrícula o arancel que no se ven reflejados, atrasos u otras solicitudes.", queHacer: 'Ingresa al <a href="https://portalalumno.uniacc.cl/Login?_gl=1*97ql5k*_gcl_au*Mzg4Mjk5MzE1LjE3NzE0NDU0MDE" target="_blank" class="text-[#2c66ff] underline hover:opacity-75">portal de estudiantes</a> con tus credenciales, comunícate con Tesorería. En caso de atraso, contacta con ALTACOB.', canal: 'Portal de estudiantes, escribir a tesoreria@uniacc.cl o contactarse con ALTACOB +56 9 42235874 (atención por Whatsapp).', espera: "1 a 10 días hábiles", resultado: "Solución a situaciones financieras de diversa índole." },
-                { id: 5, situacion: "Atención psicológica", descripcionSituacion:"Necesidad de apoyo o atención psicológica.", queHacer: 'Ingresa a <a href="https://www.uniacc.cl/capsi/" target="_blank" rel="noopener noreferrer" class="text-[#2c66ff] underline hover:opacity-75">https://www.uniacc.cl/capsi/</a> y completa el formulario disponible en el botón "solicitar ahora" o escribe un correo electrónico solicitando el formulario a completar.', canal: "Correo electrónico del Centro de Atención Psicológica (CAPSI) capsi@uniacc.cl", espera: "Depende de disponibilidad", resultado: "Serás contactado para una entrevista preliminar, esto depende de la disponibilidad de horas y atención del centro. La capacidad de atención es limitada, por lo que es importante asistir a la cita acordada." },
+                { id: 2, situacion: "Problemas técnicos dentro del aula virtual", descripcionSituacion: "En el aula virtual hay un archivo que no se logra visualizar o tienes problemas técnicos.", queHacer: 'Revisa <a href="https://www.youtube.com/watch?v=GoIEprFKcFI" target="_blank" class="text-[#2c66ff] underline hover:opacity-75 focus-visible:ring-2 focus-visible:ring-[#2c66ff]" aria-label="Tutorial para resolver problemas técnicos (abre en nueva ventana)">este tutorial</a> o dirígete a <a href="https://solicitudes.uniacc.cl/" target="_blank" class="text-[#2c66ff] underline hover:opacity-75 focus-visible:ring-2 focus-visible:ring-[#2c66ff]" aria-label="Plataforma de solicitudes (abre en nueva ventana)">https://solicitudes.uniacc.cl/</a> con las mismas credenciales con las que accedes al e-campus e ingresa tu consulta.', canal: "Portal de solicitudes", espera: "1 a 10 días hábiles", resultado: "Evaluación de solicitud y se deriva al área correspondiente." },
+                { id: 3, situacion: "Inscripción de asignaturas", descripcionSituacion: "Presentas dificultades con la plataforma al momento de inscribir asignaturas.", queHacer: 'Escríbele a secretaría académica o dirígete a <a href="https://solicitudes.uniacc.cl/" target="_blank" class="text-[#2c66ff] underline hover:opacity-75 focus-visible:ring-2 focus-visible:ring-[#2c66ff]" aria-label="Plataforma de solicitudes (abre en nueva ventana)">https://solicitudes.uniacc.cl/</a> e ingresa tu consulta.', canal: "Portal de solicitudes o correo de secretaría académica", espera: "Si ingresas al portal obtendrás respuesta entre 1 a 10 días hábiles y desde secretaría académica en horarios hábiles", resultado: "Resolución de dificultades en la inscripción de asignaturas." },
+                { id: 4, situacion: "Situaciones económicas", descripcionSituacion: "Pagos de matrícula o arancel que no se ven reflejados, atrasos o otras solicitudes.", queHacer: 'Ingresa al <a href="https://portalalumno.uniacc.cl/Login?_gl=1*97ql5k*_gcl_au*Mzg4Mjk5MzE1LjE3NzE0NDU0MDE" target="_blank" class="text-[#2c66ff] underline hover:opacity-75 focus-visible:ring-2 focus-visible:ring-[#2c66ff]" aria-label="Portal de estudiantes (abre en nueva ventana)">portal de estudiantes</a> con tus credenciales, comunícate con Tesorería. En caso de atraso, contacta con ALTACOB.', canal: 'Portal de estudiantes, escribir a tesoreria@uniacc.cl o contactarse con ALTACOB +56 9 42235874 (atención por Whatsapp).', espera: "1 a 10 días hábiles", resultado: "Solución a situaciones financieras de diversa índole." },
+                { id: 5, situacion: "Atención psicológica", descripcionSituacion:"Necesidad de apoyo o atención psicológica.", queHacer: 'Ingresa a <a href="https://www.uniacc.cl/capsi/" target="_blank" rel="noopener noreferrer" class="text-[#2c66ff] underline hover:opacity-75 focus-visible:ring-2 focus-visible:ring-[#2c66ff]" aria-label="Centro de Atención Psicológica CAPSI (abre en nueva ventana)">https://www.uniacc.cl/capsi/</a> y completa el formulario disponible en el botón "solicitar ahora" o escribe un correo electrónico solicitando el formulario a completar.', canal: "Correo electrónico del Centro de Atención Psicológica (CAPSI) capsi@uniacc.cl", espera: "Depende de disponibilidad", resultado: "Serás contactado para una entrevista preliminar, esto depende de la disponibilidad de horas y atención del centro. La capacidad de atención es limitada, por lo que es importante asistir a la cita acordada." },
             ]
         };
 
-function showCategory(cat) {
-    const container = document.getElementById('cases-container');
-    const title = document.getElementById('category-title');
-    const bar = document.getElementById('category-bar');
-    
-    container.innerHTML = '';
-    title.innerText = `Casos ${cat === 'Academico' ? 'ACADÉMICOS' : 'ADMINISTRATIVOS'}`;
-    title.style.color = cat === 'Academico' ? '#eab308' : '#ff01ff';
-    bar.style.backgroundColor = cat === 'Academico' ? '#eab308' : '#ff01ff';
+        // Variables para manejo de foco en modales
+        let previousFocusElement = null;
+        let currentOpenModal = null;
 
-    data[cat].forEach(item => {
-    const card = `
-        <div class="bg-white rounded-2xl shadow-md border-l-8 transition-transform hover:shadow-xl" style="border-left-color: ${cat === 'Academico' ? '#eab308' : '#ff01ff'}">
-            <div class="p-6">
-                <h3 class="text-xl font-bold mb-3 flex items-center gap-3 text-slate-800 uppercase leading-tight">
-                    <span class="flex items-center justify-center w-8 h-8 rounded-full text-white text-sm shrink-0 bg-[#2c66ff]">${item.id}</span>
-                    ${item.situacion}
-                </h3>
-               ${item.descripcionSituacion ? `<p class="text-sm text-slate-700 mb-5 ml-11 border-l-2 border-[#2c66ff] pl-3"><strong>Situación:</strong> ${item.descripcionSituacion}</p>` : ''}
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div class="space-y-1">
-                        <p class="text-xs font-extrabold uppercase text-slate-400 flex items-center gap-1"><i data-lucide="info" class="w-3.5 h-3.5"></i> Qué hacer</p>
-                        <p class="text-sm font-semibold text-slate-600 leading-snug">${item.queHacer}</p>
-                    </div>
-                    <div class="space-y-1">
-                        <p class="text-xs font-extrabold uppercase text-slate-400 flex items-center gap-1"><i data-lucide="message-square" class="w-3.5 h-3.5"></i> Canal</p>
-                        <p class="text-sm font-semibold text-[#2c66ff] leading-snug">${item.canal}</p>
-                    </div>
-                    <div class="space-y-1">
-                        <p class="text-xs font-extrabold uppercase text-slate-400 flex items-center gap-1"><i data-lucide="clock" class="w-3.5 h-3.5"></i> Espera</p>
-                        <p class="text-sm font-semibold text-[#eab308] leading-snug">${item.espera}</p>
-                    </div>
-                    <div class="space-y-1 p-3 rounded-lg bg-green-50">
-                        <p class="text-xs font-extrabold uppercase text-green-600 flex items-center gap-1"><i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> Resultado</p>
-                        <p class="text-xs font-bold text-green-600 leading-tight">${item.resultado}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    `;
-    container.innerHTML += card;
-});
+        function showCategory(cat) {
+            const container = document.getElementById('cases-container');
+            const title = document.getElementById('category-title');
+            const bar = document.getElementById('category-bar');
+            
+            container.innerHTML = '';
+            title.innerText = `Casos ${cat === 'Academico' ? 'ACADÉMICOS' : 'ADMINISTRATIVOS'}`;
+            title.style.color = cat === 'Academico' ? '#eab308' : '#ff01ff';
+            bar.style.backgroundColor = cat === 'Academico' ? '#eab308' : '#ff01ff';
 
-    document.getElementById('home-view').classList.add('hidden');
-    document.getElementById('category-view').classList.remove('hidden');
-    lucide.createIcons();
+            data[cat].forEach(item => {
+                const card = `
+                    <div class="bg-white rounded-2xl shadow-md border-l-8 transition-transform hover:shadow-xl" style="border-left-color: ${cat === 'Academico' ? '#eab308' : '#ff01ff'}" role="listitem">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-3 flex items-center gap-3 text-[#1f2937] uppercase leading-tight">
+                                <span class="flex items-center justify-center w-8 h-8 rounded-full text-white text-sm shrink-0 bg-[#2c66ff]" aria-label="Caso número ${item.id}">${item.id}</span>
+                                ${item.situacion}
+                            </h3>
+                           ${item.descripcionSituacion ? `<p class="text-sm text-slate-700 mb-5 ml-11 border-l-2 border-[#2c66ff] pl-3"><strong>Situación:</strong> ${item.descripcionSituacion}</p>` : ''}
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                                <div class="space-y-1">
+                                    <p class="text-xs font-extrabold uppercase text-slate-500 flex items-center gap-1"><i data-lucide="info" class="w-3.5 h-3.5" aria-hidden="true"></i> Qué hacer</p>
+                                    <p class="text-sm font-semibold text-slate-700 leading-snug">${item.queHacer}</p>
+                                </div>
+                                <div class="space-y-1">
+                                    <p class="text-xs font-extrabold uppercase text-slate-500 flex items-center gap-1"><i data-lucide="message-square" class="w-3.5 h-3.5" aria-hidden="true"></i> Canal</p>
+                                    <p class="text-sm font-semibold text-[#2c66ff] leading-snug">${item.canal}</p>
+                                </div>
+                                <div class="space-y-1">
+                                    <p class="text-xs font-extrabold uppercase text-slate-500 flex items-center gap-1"><i data-lucide="clock" class="w-3.5 h-3.5" aria-hidden="true"></i> Espera</p>
+                                    <p class="text-sm font-semibold text-[#eab308] leading-snug">${item.espera}</p>
+                                </div>
+                                <div class="space-y-1 p-3 rounded-lg bg-green-50">
+                                    <p class="text-xs font-extrabold uppercase text-green-700 flex items-center gap-1"><i data-lucide="check-circle-2" class="w-3.5 h-3.5" aria-hidden="true"></i> Resultado</p>
+                                    <p class="text-xs font-bold text-green-700 leading-tight">${item.resultado}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += card;
+            });
+
+            document.getElementById('home-view').classList.add('hidden');
+            document.getElementById('category-view').classList.remove('hidden');
+            lucide.createIcons();
+            
+            // Mover foco al título de la categoría
+            const categoryTitle = document.getElementById('category-title');
+            if (categoryTitle) {
+                categoryTitle.setAttribute('tabindex', '-1');
+                categoryTitle.focus();
+            }
         }
 
         function showHome() {
             document.getElementById('home-view').classList.remove('hidden');
             document.getElementById('category-view').classList.add('hidden');
+            
+            // Restaurar foco al botón de categoría correspondiente o al inicio
+            const academicButton = document.querySelector('button[onclick*="Academico"]');
+            if (academicButton) academicButton.focus();
         }
 
         function toggleModal(show) {
             const modal = document.getElementById('sae-modal');
-            if(show) modal.classList.replace('hidden', 'flex');
-            else modal.classList.replace('flex', 'hidden');
+            const triggerButton = document.querySelector('button[onclick="toggleModal(true)"]');
+            
+            if (show) {
+                // Guardar elemento actualmente enfocado
+                previousFocusElement = document.activeElement;
+                currentOpenModal = modal;
+                
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                
+                // Actualizar aria-expanded del botón
+                if (triggerButton) triggerButton.setAttribute('aria-expanded', 'true');
+                
+                // Mover foco al primer elemento enfocable del modal
+                const focusableElements = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+                if (focusableElements.length > 0) {
+                    focusableElements[0].focus();
+                }
+                
+                // Agregar manejador de tecla ESC
+                document.addEventListener('keydown', handleEscKey);
+            } else {
+                modal.classList.remove('flex');
+                modal.classList.add('hidden');
+                
+                // Actualizar aria-expanded del botón
+                if (triggerButton) triggerButton.setAttribute('aria-expanded', 'false');
+                
+                // Restaurar foco
+                if (previousFocusElement && previousFocusElement.focus) {
+                    previousFocusElement.focus();
+                }
+                
+                // Remover manejador de tecla ESC
+                document.removeEventListener('keydown', handleEscKey);
+                currentOpenModal = null;
+            }
         }
-	function toggleModalSecretaria(show) {
-   	    const modal = document.getElementById('secretaria-modal');
-            if(show) modal.classList.replace('hidden', 'flex');
-            else modal.classList.replace('flex', 'hidden');
+        
+        function toggleModalSecretaria(show) {
+            const modal = document.getElementById('secretaria-modal');
+            const triggerButton = document.querySelector('button[onclick="toggleModalSecretaria(true)"]');
+            
+            if (show) {
+                previousFocusElement = document.activeElement;
+                currentOpenModal = modal;
+                
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                
+                if (triggerButton) triggerButton.setAttribute('aria-expanded', 'true');
+                
+                const focusableElements = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+                if (focusableElements.length > 0) {
+                    focusableElements[0].focus();
+                }
+                
+                document.addEventListener('keydown', handleEscKey);
+            } else {
+                modal.classList.remove('flex');
+                modal.classList.add('hidden');
+                
+                if (triggerButton) triggerButton.setAttribute('aria-expanded', 'false');
+                
+                if (previousFocusElement && previousFocusElement.focus) {
+                    previousFocusElement.focus();
+                }
+                
+                document.removeEventListener('keydown', handleEscKey);
+                currentOpenModal = null;
+            }
+        }
+        
+        function handleEscKey(event) {
+            if (event.key === 'Escape' && currentOpenModal) {
+                if (currentOpenModal.id === 'sae-modal') {
+                    toggleModal(false);
+                } else if (currentOpenModal.id === 'secretaria-modal') {
+                    toggleModalSecretaria(false);
+                }
+            }
         }
 
         document.getElementById('year').innerText = new Date().getFullYear();
         lucide.createIcons();
+        
+        // Mejorar accesibilidad para target="_blank"
+        document.querySelectorAll('a[target="_blank"]').forEach(link => {
+            if (!link.getAttribute('aria-label')) {
+                const text = link.textContent.trim();
+                link.setAttribute('aria-label', `${text} (abre en nueva ventana)`);
+            }
+        });
     </script>
 </body>
 </html>
